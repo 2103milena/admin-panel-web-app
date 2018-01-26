@@ -11,9 +11,10 @@ class Candidates extends React.Component {
             candidates: [],
             name: this.props.name,
             id: this.props.id,
-            chosen: null,
+            chosenCand: this.props.chosenCand,
         }
         this.handleClickDiv = this.handleClickDiv.bind(this);
+        
     }
 
     handleClickDiv(name, id) {
@@ -31,6 +32,7 @@ class Candidates extends React.Component {
             })
     }
 
+
     render() {
         if (this.state.name != null)
             return (
@@ -38,10 +40,10 @@ class Candidates extends React.Component {
                     <Phases />
                     <div>
                         {this.state.candidates.map((candidate, index) => {
-                            if (index == this.state.chosen)
+                            if (index == this.state.chosenCand)
                                 return (
                                     <div className="container-table" id="red" onClick={() => {
-                                        this.state.chosen = index;
+                                        this.state.chosenCand = index;
                                         this.handleClickDiv(candidate.name, candidate.id)
                                     }}
                                     >
@@ -58,8 +60,8 @@ class Candidates extends React.Component {
                                 )
                             else
                                 return (
-                                    <div className="container-table"  onClick={() => {
-                                        this.state.chosen = index;
+                                    <div className="container-table" onClick={() => {
+                                        this.state.chosenCand = index;
                                         this.handleClickDiv(candidate.name, candidate.id)
                                     }}
                                     >
@@ -76,7 +78,7 @@ class Candidates extends React.Component {
                                 )
                         })}
 
-                        < Link to="/companies"><button className="next" onClick={() => { this.props.handleNextCandidate(this.state.id, this.state.name) }}>NEXT</button></Link>
+                        < Link to="/companies"><button className="next" onClick={() => { this.props.handleNextCandidate(this.state.id, this.state.name, this.state.chosenCand) }}>NEXT</button></Link>
                     </div>
                 </div >
             )
@@ -88,8 +90,8 @@ class Candidates extends React.Component {
                     <div>
                         {this.state.candidates.map((candidate, index) => {
                             return (
-                                <div className="container-table"  onClick={() => {
-                                    this.state.chosen = index;
+                                <div className="container-table" onClick={() => {
+                                    this.state.chosenCand = index;
                                     this.handleClickDiv(candidate.name, candidate.id)
                                 }}
                                 >
@@ -106,8 +108,8 @@ class Candidates extends React.Component {
                             )
                         })}
 
-                        < button className="next" >NEXT</button>                </div>
-                    <div>Nisu uneti svi podaci</div>
+                        < button className="next" onClick={() => {alert('Morate selektovati kandidata.');}} >NEXT</button>                </div>
+                  
                 </div>
             )
     }

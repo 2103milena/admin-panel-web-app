@@ -22,6 +22,8 @@ class App extends Component {
       note: null,
       candidateName: null,
       companyName: null,
+      chosenCand: null,
+      chosenComp: null,
 
     }
     this.handleNextCandidate = this.handleNextCandidate.bind(this);
@@ -43,17 +45,20 @@ class App extends Component {
     }
   }
 
-  handleNextCandidate(id, name) {
+  handleNextCandidate(id, name, chosenCand) {
 
     this.state.candidateId = id;
-    this.state.candidateName = name
-    // console.log(this.state.candidateName);
+    this.state.candidateName = name;
+    this.state.chosenCand = chosenCand;
+    console.log(this.state.chosenCand);
   }
 
-  handleNextCompany(id, name) {
+  handleNextCompany(id, name, chosenComp) {
 
     this.state.companyId = id;
     this.state.companyName = name;
+    this.state.chosenComp = chosenComp;
+
   }
 
   handleNextDetails(note, phase, status, date) {
@@ -74,14 +79,16 @@ class App extends Component {
         companyName: this.state.companyName,
       }
 
-    axios.post('http://localhost:3333/api/reports', report).then(function (response) {
-      console.log(response);
-    })
+      
+      axios.post('http://localhost:3333/api/reports', report).then(function (response) {
+        console.log(response);
+      })
       .catch(function (error) {
         console.log(error);
       });
-  }
-
+    }
+    
+  
 
   render() {
     return (
@@ -91,8 +98,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={ReportList} />
             <Route path="/create" component={CreateReport} />
-            <Route path="/candidates" render={props => <Candidates handleNextCandidate={this.handleNextCandidate} name={this.state.candidateName} id={this.state.candidateId} />} />
-            <Route path="/companies" render={props => <Companies handleNextCompany={this.handleNextCompany} name={this.state.companyName} id={this.state.companyId} />} />
+            <Route path="/candidates" render={props => <Candidates handleNextCandidate={this.handleNextCandidate} name={this.state.candidateName} id={this.state.candidateId} chosenCand={this.state.chosenCand} />} />
+            <Route path="/companies" render={props => <Companies handleNextCompany={this.handleNextCompany} name={this.state.companyName} id={this.state.companyId} chosenComp={this.state.chosenComp} />} />
             <Route path="/details" render={props => <Details handleNextDetails={this.handleNextDetails} />} />
           </Switch>
 

@@ -10,7 +10,7 @@ class Companies extends React.Component {
             companies: [],
             name: this.props.name,
             id: this.props.id,
-            chosen: null,
+            chosenComp: this.props.chosenComp,
         }
         this.handleClickDiv = this.handleClickDiv.bind(this);
     }
@@ -38,11 +38,11 @@ class Companies extends React.Component {
                     <div>
                         {this.state.companies.map((company, index) => {
 
-                            if (this.state.chosen == index)
+                            if (this.state.chosenComp == index)
                                 return (
 
                                     <div className="container-table" id="reddd" onClick={() => {
-                                        this.state.chosen = index;
+                                        this.state.chosenComp = index;
                                         this.handleClickDiv(company.name, company.id)
                                     }}>
                                         <div className="row">
@@ -58,7 +58,7 @@ class Companies extends React.Component {
                                 return (
 
                                     <div className="container-table" onClick={() => {
-                                        this.state.chosen = index;
+                                        this.state.chosenComp = index;
                                         this.handleClickDiv(company.name, company.id)
                                     }}>
                                         <div className="row">
@@ -72,7 +72,7 @@ class Companies extends React.Component {
                         })}
 
                         <Link to="/candidates" ><button className="back">BACK</button></Link>
-                        <Link to="/details"><button className="next" onClick={() => { this.props.handleNextCompany(this.state.id, this.state.name) }}>NEXT</button></Link>
+                        <Link to="/details"><button className="next" onClick={() => { this.props.handleNextCompany(this.state.id, this.state.name,this.state.chosenComp) }}>NEXT</button></Link>
 
                     </div>
                 </div>
@@ -85,7 +85,7 @@ class Companies extends React.Component {
                         {this.state.companies.map((company, index) => {
                             return (
                                 <div className="container-table" onClick={() => {
-                                    this.state.chosen = index;
+                                    this.state.chosenComp = index;
                                     this.handleClickDiv(company.name, company.id)
                                 }}>
                                     <div className="row">
@@ -99,7 +99,7 @@ class Companies extends React.Component {
                         })}
 
                         <Link to="/candidates" ><button className="back">BACK</button></Link>
-                        <button className="next">NEXT</button>
+                        <button className="next" onClick={() => {alert('Morate selektovati kompaniju.');}}>NEXT</button>
                         <div>Unesite SVE podatke </div>
                     </div>
                 </div>

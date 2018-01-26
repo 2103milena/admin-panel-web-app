@@ -1,6 +1,4 @@
 import React from 'react';
-
-// import Header from './common/header';
 import Search from './search';
 import axios from 'axios';
 import MoreDetailModal from './moreDetailModal';
@@ -10,17 +8,20 @@ class ReportList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            allReports: [],
             showModal: false,
+            allReports: [],
+            displayFilteredReports: [],
 
         }
         this.handleDelete = this.handleDelete.bind(this);
+        this.filterListReports = this.filterListReports.bind(this);
     }
 
     componentDidMount() {
         axios.get('http://localhost:3333/api/reports')
             .then(response => {
                 this.setState({ allReports: response.data })
+                this.setState({ displayFilteredReports: response.data });
             })
     }
 
@@ -43,6 +44,30 @@ class ReportList extends React.Component {
 
     }
 
+    filterListReports(searchString) {
+        // console.log(searchString);
+        let filteredReports = this.state.allReports;
+        //   filteredReports = this.state.displayFilteredReports;
+
+        filteredReports = filteredReports.filter((report) => {
+            if (report.candidateName != null) {
+
+                console.log(searchString.toLowerCase())
+                console.log(report.candidateName.toLowerCase())
+                console.log(report.candidateName.toLowerCase().includes(searchString.toLowerCase()))
+                return (
+                    report.candidateName.toLowerCase().includes(searchString.toLowerCase())
+                )
+            }
+            else return false;
+
+        });
+        this.setState({ displayFilteredReports: filteredReports })
+        // console.log(filteredReports)
+        // this.setState({ filteredReports : pomocnaLista})
+
+    }
+
     render() {
         // console.log(this.state.allReports);
 
@@ -50,8 +75,8 @@ class ReportList extends React.Component {
             <div>
 
                 <div>
-                    {/* <Header /> */}
-                    <Search />
+
+                    <Search filterListReports={this.filterListReports} instant={true} />
                 </div>
                 <br />
                 <br />
@@ -60,7 +85,7 @@ class ReportList extends React.Component {
 
 
                 <div>
-                    {this.state.allReports.map((report, index) => {
+                    {this.state.displayFilteredReports.map((report, index) => {
                         return (
                             <div>
 

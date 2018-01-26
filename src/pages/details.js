@@ -1,6 +1,5 @@
 import React from 'react';
 import Phases from './phases';
-import axios from 'axios';
 import DatePicker from './datePicker';
 import { Link } from 'react-router-dom';
 
@@ -121,7 +120,7 @@ class Details extends React.Component {
                             </div>
                             <Link to="/companies"><button className="back">BACK</button></Link>
 
-                            <button className="submit">SUBMIT</button>
+                            <button className="submit" onClick={() => {alert('Morate selektovati sve opcije.');}}>SUBMIT</button>
                             <div>Unesite SVE podatke</div>
                         </form>
                     </div>
